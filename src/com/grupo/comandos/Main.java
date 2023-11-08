@@ -1,35 +1,76 @@
-package com.grupo.comandos;
+package pizza_codigo;
+
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("1) Criar uma pizza");
-		/* Ao escolher essa opção, os ingredientes devem ser mostrados em tela, e o usuário pode
-		escolher que ingredientes colocar na pizza. A pizza deve receber, no mínimo, 1 ingrediente e
-		no máximo 5 ingredientes. Deve ser possível desfazer a ação e remover o último ingrediente
-		colocado. A ordem que os ingredientes são colocados não importa para o cliente.*/
-		
-		System.out.println("2) Criar um novo pedido");
-		/*O sistema deve permitir que pedidos sejam enfileirados. Um pedido consiste em uma pizza
-		e mesa do cliente.*/
-		
-		System.out.println("3) Servir um pedido");
-		/* O pedido deve ser atendido e removido da estrutura de dados se, e apenas se, a pizza
-		apropriada tenha sido criada antes.*/
-		
-		System.out.println("4) Adicionar ingredientes");
-		/* Essa opção permite que a pizzaria adicione novos ingredientes ao seu cardápio de
-		ingredientes. Não devem existir ingredientes repetidos.*/	
-		
-		System.out.println("5) Estatísticas dos pedidos");
-		/* O sistema deve imprimir quantos pizzas foram servidas, a quantidade média de ingredientes
-		por pizza, qual o ingrediente mais pedido (e quantas vezes foi pedido), quais ingredientes
-		não foram escolhidos nenhuma vez.*/
-		
-		System.out.println("6) Sair do programa");
-		
-		
-		
-		
+		Scanner entrada = new Scanner(System.in);
 
+		Ingredientes ingredientes = new Ingredientes();
+
+		int opcao = 1;
+
+		while (opcao != 6) {
+			System.out.println("\n1) Criar uma pizza");
+			System.out.println("2) Criar um novo pedido");
+			System.out.println("3) Servir um pedido");
+			System.out.println("4) Adicionar ingredientes");
+			System.out.println("5) Estatísticas dos pedidos");
+			System.out.println("6) Sair do programa");
+
+			System.out.print("\nDigite uma opção: ");
+			opcao = entrada.nextInt();
+			entrada.nextLine();
+
+			if (opcao == 1) {
+				if (ingredientes.isEmpty()) {
+					System.out.println("Não é possível criar uma pizza, adicione ingredientes!");
+
+				} else {
+					ingredientes.printarIngredientes();
+
+				}
+
+			} else if (opcao == 2) {
+				System.out.println("2) Criar um novo pedido");
+
+			} else if (opcao == 3) {
+				System.out.println("3) Servir um pedido");
+
+			} else if (opcao == 4) {
+				System.out.print("Quantos ingredientes deseja adicionar? \nDigite um número: ");
+				
+				int quantidade = entrada.nextInt();
+				entrada.nextLine();
+
+				for (int i = 0; i < quantidade; i++) {
+
+					System.out.print("Digite o ingrediente: ");
+					String item = entrada.nextLine();
+
+					if (!ingredientes.isEmpty()) {
+
+						if (!ingredientes.verificarIngrediente(item)) {
+							ingredientes.inserir(item);
+
+						} else {
+							System.out.println("Ingrediente já cadastrado!");
+							break;
+						}
+					} else {
+						ingredientes.inserir(item);
+					}
+				}
+
+			} else if (opcao == 5) {
+				System.out.println("5) Estatísticas dos pedidos");
+
+			} else if (opcao == 6) {
+				System.out.println("6) Sair do programa");
+			}
+
+		}
+		entrada.close();
 	}
+
 }
