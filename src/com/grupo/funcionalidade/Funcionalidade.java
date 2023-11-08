@@ -8,10 +8,13 @@
 package com.grupo.funcionalidade;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import com.grupo.entidade.Ingrediente;
 import com.grupo.entidade.Pizza;
-import com.grupo.lista.ListaEncadeada;
+import com.grupo.funcionalidade.list.ListaEncadeada;
 
 public class Funcionalidade {
 	
@@ -30,9 +33,30 @@ public class Funcionalidade {
 				""";
 	}
 	
-	public static void criarPizza(Ingrediente[] listaIngrediente) {
-		Pizza pizza = new Pizza(listaIngrediente);
+	public static void criarPizza(String[] resposta) {
+		int opcao;
+		int i = 0;
+		Ingrediente[] listaIng = new Ingrediente[4];
+		
+		for (String item : resposta) {
+			opcao = Integer.parseInt(item);
+			
+			listaIng[i] = listaIngredientes.get(opcao);
+		}
+		
+		Pizza pizza = new Pizza(listaIng);
 		listaPizza.addFirst(pizza);
+	}
+	
+	public static String mostrarPizza() {
+		String msg = "Pizzas:";
+		
+		ArrayList<Pizza> listaValores = listaPizza.getListaValor();
+		for (Pizza pizza: listaValores) {
+			msg += "* "+pizza.toString();
+		}
+		
+		return msg;
 	}
 
 	public void novoPedido() {

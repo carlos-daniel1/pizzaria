@@ -1,15 +1,15 @@
-package pizzaria;
+package com.grupo.comandos;
 
 public class Pilha {
 	String elementos[];
 	int topo;
 
 	public Pilha() {
-		elementos = new String[10];
+		elementos = new String[5];
 		topo = -1;
 	}
 
-	public void push(String e) {
+	public void inserir(String e) {
 		//if (isFull()) {
 			//System.out.println("Pilha cheia!");		
 			topo++;
@@ -41,8 +41,13 @@ public class Pilha {
 
 	public static void main(String[] args) {
 		Pilha p = new Pilha();
+		p.inserir("queijo");
+		p.inserir("calabresa");
+		p.inserir("requeijao");
+		p.inserir("cebola");
+		p.inserir("molho de tomate");
+		
 
-		p.pop();
-
+		System.out.println("oi");
 	}
 }

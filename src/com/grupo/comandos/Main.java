@@ -1,4 +1,4 @@
-package pizzaria;
+package com.grupo.comandos;
 
 public class Main {
 	public static void main(String[] args) {

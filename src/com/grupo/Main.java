@@ -23,9 +23,12 @@ public class Main {
 			opcao = Integer.parseInt(opcaoStr);
 			
 			if(opcao == 1) {
-				JOptionPane.showInputDialog(null, Funcionalidade.mostrarIngredientes());
-				String nome;
-				Ingrediente[] ingredientes;
+				String msg = "Digite o numero dos ingredientes, separados por espaço!\n";
+				String respostaStr = JOptionPane.showInputDialog(null, msg+Funcionalidade.mostrarIngredientes());
+				
+				String[] resposta = respostaStr.split(" ");
+				
+				Funcionalidade.criarPizza(resposta);
 			}else if(opcao == 4) {
 				JOptionPane.showMessageDialog(null, Funcionalidade.mostrarIngredientes());
 			}

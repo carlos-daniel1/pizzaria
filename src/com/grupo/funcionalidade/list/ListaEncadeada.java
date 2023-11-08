@@ -1,4 +1,6 @@
-package com.grupo.lista;
+package com.grupo.funcionalidade.list;
+
+import java.util.ArrayList;
 
 public class ListaEncadeada<E> {
 	
@@ -46,6 +48,25 @@ public class ListaEncadeada<E> {
 		return cabeca.valor;
 	}
 	
+	public E last() {
+		return cauda.valor;
+	}
+	
+	public Node<E> getCabeca() {
+		return cabeca;
+	}
+	
+	public ArrayList<E> getListaValor() {
+		Node<E> nodes = cabeca;
+		ArrayList<E> listaValor = new ArrayList<>();
+		
+		while(nodes != null) {
+			listaValor.add(nodes.valor);
+			nodes = nodes.proximo;
+		}
+		
+		return listaValor;
+	}
 }
 
 class Node<E> {
