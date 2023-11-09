@@ -1,4 +1,4 @@
-package pizza_codigo;
+package pizzaria;
 
 public class Ingredientes {
 	String elementos[] = new String[1];
@@ -57,10 +57,17 @@ public class Ingredientes {
 		}
 		return verificacao;
 	}
+	
+	public String selecionarIngrediente(int i) {
+		return elementos[i-1];
+	}
 
 	public void printarIngredientes() {
+		int posicao = 0;
 		for (String i : elementos) {
-			System.out.println(i);
+			posicao++;
+			System.out.println(posicao + "º Ingrediente: " + i);
+			
 		}
 	}
 

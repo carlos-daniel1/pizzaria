@@ -1,4 +1,4 @@
-package pizza_codigo;
+package pizzaria;
 
 import java.util.Scanner;
 
@@ -27,8 +27,17 @@ public class Main {
 					System.out.println("Não é possível criar uma pizza, adicione ingredientes!");
 
 				} else {
-					ingredientes.printarIngredientes();
-
+					System.out.println("---Ingredientes disponíveis---");					
+					
+					ingredientes.printarIngredientes();	
+					
+					System.out.print("\nQual ingrediente deseja adicionar na pizza? \nDigite o número: ");
+					
+					int escolherIngrediente = entrada.nextInt();
+					
+					System.out.println("Você escolheu: "+ ingredientes.selecionarIngrediente(escolherIngrediente));
+						
+								
 				}
 
 			} else if (opcao == 2) {
@@ -52,21 +61,23 @@ public class Main {
 
 						if (!ingredientes.verificarIngrediente(item)) {
 							ingredientes.inserir(item);
-
+							
 						} else {
 							System.out.println("Ingrediente já cadastrado!");
 							break;
 						}
 					} else {
 						ingredientes.inserir(item);
+						
 					}
 				}
-
+				
+				System.out.println("\nIngrediente(s) cadastrado(s) com sucesso!");
 			} else if (opcao == 5) {
 				System.out.println("5) Estatísticas dos pedidos");
 
 			} else if (opcao == 6) {
-				System.out.println("6) Sair do programa");
+				System.out.println("Agredecemos a preferência, volte sempre!");
 			}
 
 		}
