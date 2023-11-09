@@ -1,4 +1,4 @@
-package pizzaria;
+package com.grupo.comandos;
 
 import java.util.Scanner;
 

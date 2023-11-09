@@ -9,6 +9,8 @@
 */
 package com.grupo;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import com.grupo.entidade.Ingrediente;
@@ -27,10 +29,18 @@ public class Main {
 			if(opcao == 1) {
 				String msg = "Digite o numero dos ingredientes, separados por espaço!\n";
 				String respostaStr = JOptionPane.showInputDialog(null, msg+Funcionalidade.mostrarIngredientes());
+				int mesa = Integer.parseInt(
+						JOptionPane.showInputDialog("Sua mesa: ")
+						);
 				
 				String[] resposta = respostaStr.split(" ");
+				int[] respostaInt = new int[4];
 				
-				Funcionalidade.criarPizza(resposta);
+				for (int i=0; i<5; i++) {
+					respostaInt[i] = Integer.parseInt( resposta[i] );
+				}
+				
+				Funcionalidade.criarPizza(mesa, respostaInt);
 			}else if(opcao == 4) {
 				JOptionPane.showMessageDialog(null, Funcionalidade.mostrarIngredientes());
 			}

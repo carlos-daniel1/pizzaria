@@ -2,18 +2,18 @@ package com.grupo.entidade;
 
 public class Pizza {
 	
-	Ingrediente[] listaIngredientes;
+	String[] listaIngredientes;
 
-	public Pizza(Ingrediente[] listaIngredientes) {
+	public Pizza(String[] ingredientes) {
 		super();
-		this.listaIngredientes = listaIngredientes;
+		this.listaIngredientes = ingredientes;
 	}
 
-	public Ingrediente[] getListaIngredientes() {
+	public String[] getListaIngredientes() {
 		return listaIngredientes;
 	}
 
-	public void setListaIngredientes(Ingrediente[] listaIngredientes) {
+	public void setListaIngredientes(String[] listaIngredientes) {
 		this.listaIngredientes = listaIngredientes;
 	}
 

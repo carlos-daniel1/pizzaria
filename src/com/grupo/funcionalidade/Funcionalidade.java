@@ -7,19 +7,16 @@
 */
 package com.grupo.funcionalidade;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.text.StyledEditorKit.ForegroundAction;
-
-import com.grupo.entidade.Ingrediente;
+import com.grupo.entidade.Pedido;
 import com.grupo.entidade.Pizza;
-import com.grupo.funcionalidade.list.ListaEncadeada;
 
 public class Funcionalidade {
 	
-	static ArrayList<Ingrediente> listaIngredientes = new ArrayList<Ingrediente>();
-	static ListaEncadeada<Pizza> listaPizza = new ListaEncadeada<Pizza>();
+	static ArrayList<String> baseIngredientes = new ArrayList<>();
+	static ArrayDeque<Pedido> pedidos = new ArrayDeque<Pedido>();
 
 	public static String mostrarMenu() {
 		return """
@@ -33,54 +30,53 @@ public class Funcionalidade {
 				""";
 	}
 	
-	public static void criarPizza(String[] resposta) {
-		int opcao;
-		int i = 0;
-		Ingrediente[] listaIng = new Ingrediente[4];
-		
-		for (String item : resposta) {
-			opcao = Integer.parseInt(item);
-			
-			listaIng[i] = listaIngredientes.get(opcao);
+	public static void criarPizza(int mesa, int[] resposta) {
+		String[] ingredientes = new String[4];
+		for(int i=0; i<5; i++) {
+			ingredientes[i] = baseIngredientes.get( resposta[i] );
 		}
 		
-		Pizza pizza = new Pizza(listaIng);
-		listaPizza.addFirst(pizza);
+		pedidos.add(
+				new Pedido(mesa, new Pizza(ingredientes))
+				);
 	}
 	
 	public static String mostrarPizza() {
 		String msg = "Pizzas:";
 		
-		ArrayList<Pizza> listaValores = listaPizza.getListaValor();
-		for (Pizza pizza: listaValores) {
-			msg += "* "+pizza.toString();
-		}
+		/*
+		 * ArrayList<Pizza> listaValores = listaPizza.getListaValor(); for (Pizza pizza:
+		 * listaValores) { msg += "* "+pizza.toString(); }
+		 */
 		
 		return msg;
 	}
 
-	public void novoPedido() {
+	public static void novoPedido(Pedido pedido) {
+		pedidos.add(pedido);
 
 	}
 
-	public void servirPedido() {
-
+	public static Pedido servirPedido() {
+		Pedido pedido = pedidos.remove();
+		
+		return pedido;
 	}
 
 	public static void adicionarIngredientes(String nome) {
-		listaIngredientes.add(
-				new Ingrediente(nome)
+		baseIngredientes.add(
+				nome
 				);
 	}
 	
 	public static String mostrarIngredientes() {
-		if (listaIngredientes.isEmpty()) {
+		if (baseIngredientes.isEmpty()) {
 			adicionarIngredientes("Tomate");
 		}
 		String msg = "Ingredientes:";
 		
-		for (Ingrediente item : listaIngredientes) {
-			msg += "\n * " + item.getNome();
+		for (String item : baseIngredientes) {
+			msg += "\n * " + item;
 		}
 		
 		return msg;

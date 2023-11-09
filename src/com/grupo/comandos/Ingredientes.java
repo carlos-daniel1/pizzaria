@@ -1,4 +1,4 @@
-package pizzaria;
+package com.grupo.comandos;
 
 public class Ingredientes {
 	String elementos[] = new String[1];
