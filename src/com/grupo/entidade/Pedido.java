@@ -1,6 +1,7 @@
 package com.grupo.entidade;
 
 public class Pedido {
+	
 	private int mesa;
 	private Pizza pizza;
 
