@@ -9,7 +9,7 @@
 */
 package com.grupo;
 
-import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import com.grupo.entidade.Ingrediente;
 import com.grupo.entidade.Pedido;
@@ -142,10 +142,10 @@ public class Main {
 			for (int i = 0; i < respostaStr.length; i++) {
 				respostaInt[i] = Integer.parseInt(respostaStr[i]);
 			}
-		} else {
+		} else {			
 			respostaInt[0] = Integer.parseInt(respostaStr[0]);
 		}
-
+		
 		return Funcionalidade.criarPizza(respostaInt);
 	}
 

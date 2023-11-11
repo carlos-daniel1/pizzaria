@@ -44,7 +44,9 @@ public class Funcionalidade {
 		for (int i = 0; i < 5; i++) {
 			if (resposta[i] > 0) {
 				ingredientes[i] = baseIngredientes.get(resposta[i] - 1);
+			
 			}
+				
 		}
 
 		Pizza pizza = new Pizza(ingredientes);
@@ -133,7 +135,10 @@ public class Funcionalidade {
 		int soma = 0;
 		for (int item : contadorQuantidadeMediaIngredientes)
 			soma += item;
-		msg += "\n Quantidade média de ingredientes por pizza: " + (soma / contadorQuantidadeMediaIngredientes.size());
+		if(contadorQuantidadeMediaIngredientes.size() > 0) {
+			msg += "\n Quantidade média de ingredientes por pizza: " + (soma / contadorQuantidadeMediaIngredientes.size());
+		}
+		
 
 		int maiorRepetido = 0;
 		int menorRepetido = 100;
@@ -152,10 +157,13 @@ public class Funcionalidade {
 				menorRepetido = valor;
 				ingredienteMenosPedido = item;
 			}
+		}		
+		msg += "\n O ingrediente mais pedido é " + ingredienteMaisPedido + "(" + maiorRepetido + " vezes)";		
+		
+		if(menorRepetido < 100) {
+			msg += "\n O ingrediente menos pedido é " + ingredienteMenosPedido + "(" + menorRepetido + " vezes)";
 		}
-		msg += "\n O ingrediente mais pedido é " + ingredienteMaisPedido + "(" + maiorRepetido + " vezes)";
-		msg += "\n O ingrediente menos pedido é " + ingredienteMenosPedido + "(" + menorRepetido + " vezes)";
-
+		
 		return msg;
 	}
 
