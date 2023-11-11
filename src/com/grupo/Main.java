@@ -34,30 +34,49 @@ public class Main {
 				String msg = "Digite o numero dos ingredientes, separados por espaço!\n";
 				String resposta = JOptionPane.showInputDialog(null, msg + Funcionalidade.mostrarIngredientes());
 
-				if (resposta.length() == 0) {
+				if (resposta == null || resposta.length() == 0) {
 					JOptionPane.showMessageDialog(null,
 							"Você não colocou nenhum ingrediente na pizza, seu cozinheiro sem futuro!!");
 					continue;
 				}
 				Pizza pizzaCriada = criarPizzaVisual(resposta);
-
+				
+				if(pizzaCriada == null) {
+					JOptionPane.showMessageDialog(null, "Falha na criação da pizza, digite um ingrediente válido!");
+					continue;
+				}
+				
 				Funcionalidade.adicionarPizza(pizzaCriada);
 
 			} else if (opcao == 2) {
 				JOptionPane.showMessageDialog(null, "2) Criar um novo pedido", "Criação de pedido",
 						JOptionPane.INFORMATION_MESSAGE);
-
-//				String codigoPizza = JOptionPane.showInputDialog(null, Funcionalidade.mostrarPizza());
-				int mesa = Integer.parseInt(JOptionPane.showInputDialog("Sua mesa: "));
+				
+				int mesa;				
+				try {
+					mesa = Integer.parseInt(JOptionPane.showInputDialog("Informe sua mesa: "));				
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Digite uma mesa válida");
+					continue;
+				}
+				
 				String msg = "Digite o numero dos ingredientes, separados por espaço!\n";
 				String resposta = JOptionPane.showInputDialog(null, msg + Funcionalidade.mostrarIngredientes());
-				if (resposta.length() == 0) {
+				if (resposta == null || resposta.length() == 0) {
 					JOptionPane.showMessageDialog(null,
 							"Você não colocou nenhum ingrediente na pizza, seu comedor de massa sem futuro!!");
 					continue;
 				}
+				
+				
 				Pizza pizza = criarPizzaVisual(resposta);
 
+				if(pizza == null) {
+					JOptionPane.showMessageDialog(null, "Falha na criação da pizza, digite um ingrediente válido!");
+					continue;
+				}
+				
+				
 				String[] ingredientesPedidos = pizza.getListaIngredientes();
 
 				int i = 0;
@@ -142,10 +161,9 @@ public class Main {
 			for (int i = 0; i < respostaStr.length; i++) {
 				respostaInt[i] = Integer.parseInt(respostaStr[i]);
 			}
-		} else {			
+		} else {
 			respostaInt[0] = Integer.parseInt(respostaStr[0]);
 		}
-		
 		return Funcionalidade.criarPizza(respostaInt);
 	}
 

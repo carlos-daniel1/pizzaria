@@ -40,18 +40,28 @@ public class Funcionalidade {
 
 	public static Pizza criarPizza(int[] resposta) {
 		String[] ingredientes = new String[5];
+		Pizza pizza = null;
 
-		for (int i = 0; i < 5; i++) {
-			if (resposta[i] > 0) {
-				ingredientes[i] = baseIngredientes.get(resposta[i] - 1);
-			
+		if (!verificarRangeLista(resposta)) {
+			for (int i = 0; i < 5; i++) {
+				if (resposta[i] > 0) {
+					ingredientes[i] = baseIngredientes.get(resposta[i] - 1);
+
+				}
 			}
-				
+			pizza = new Pizza(ingredientes);
 		}
-
-		Pizza pizza = new Pizza(ingredientes);
-
 		return pizza;
+	}
+	
+	private static boolean verificarRangeLista(int[] resposta) {
+
+		for (int i : resposta) {
+			if (i > baseIngredientes.size()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static void adicionarPizza(Pizza pizza) {
@@ -86,9 +96,11 @@ public class Funcionalidade {
 			for (Pizza item : listaPizza) {
 				if (item.equals(pedidos.getFirst().getPizza())) {
 					pedido = pedidos.remove();
+					listaPizza.remove(item);
 					contadorPedidosServidos++;
+					break;
 				}
-
+				
 			}
 		}
 
@@ -135,10 +147,13 @@ public class Funcionalidade {
 		int soma = 0;
 		for (int item : contadorQuantidadeMediaIngredientes)
 			soma += item;
-		if(contadorQuantidadeMediaIngredientes.size() > 0) {
-			msg += "\n Quantidade média de ingredientes por pizza: " + (soma / contadorQuantidadeMediaIngredientes.size());
+		if (contadorQuantidadeMediaIngredientes.size() > 0) {
+			msg += "\n Quantidade média de ingredientes por pizza: "
+					+ (soma / contadorQuantidadeMediaIngredientes.size());
+
+		} else {
+			msg += "\n Quantidade média de ingredientes por pizza: 0";
 		}
-		
 
 		int maiorRepetido = 0;
 		int menorRepetido = 100;
@@ -157,13 +172,13 @@ public class Funcionalidade {
 				menorRepetido = valor;
 				ingredienteMenosPedido = item;
 			}
-		}		
-		msg += "\n O ingrediente mais pedido é " + ingredienteMaisPedido + "(" + maiorRepetido + " vezes)";		
-		
-		if(menorRepetido < 100) {
+		}
+		msg += "\n O ingrediente mais pedido é " + ingredienteMaisPedido + "(" + maiorRepetido + " vezes)";
+
+		if (menorRepetido != 100) {
 			msg += "\n O ingrediente menos pedido é " + ingredienteMenosPedido + "(" + menorRepetido + " vezes)";
 		}
-		
+
 		return msg;
 	}
 
