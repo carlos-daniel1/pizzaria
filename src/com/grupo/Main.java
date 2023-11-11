@@ -1,7 +1,7 @@
 /* Componentes:
- * Gigliarly
- * Daniel
- * Marcio
+ * Gigliarly Marcelino
+ * Carlos Daniel
+ * Marcio Vitor
  * Pedro Lucas
  * Pedro Henrique
  * Vinicius Candido
