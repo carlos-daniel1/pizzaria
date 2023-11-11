@@ -1,4 +1,4 @@
-/* Componentes:
+/* Equipe:
  * Gigliarly Marcelino
  * Carlos Daniel
  * Marcio Vitor
