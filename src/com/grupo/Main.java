@@ -1,11 +1,11 @@
 /* Equipe:
- * Gigliarly Marcelino
+ * Brenda Rayane
  * Carlos Daniel
- * Marcio Vitor
- * Pedro Lucas
- * Pedro Henrique
- * Vinicius Candido
  * Jefferson Costa
+ * Gigliarly Marcelino
+ * Marcio Vitor
+ * Pedro Henrique
+ * Pedro Lucas
 */
 package com.grupo;
 
