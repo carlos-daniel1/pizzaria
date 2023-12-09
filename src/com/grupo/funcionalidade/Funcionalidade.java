@@ -106,10 +106,15 @@ public class Funcionalidade {
 	}
 	
 	public static String pizzasCriadas() {
-		String msg = "Pizzas:";
+		String msg = "Pizzas criadas:";
+		int num = 1;
 		
-		for(Pizza i : listaPizza) {
-			msg += "Pizza: " + i.getListaIngredientes();
+		for(Pizza i : listaPizza) {	
+			msg += "\nPizza " + num + ": " + i.getListaIngredientes()[0] +" | " + i.getListaIngredientes()[1] + " | "
+					+ i.getListaIngredientes()[2] + " | " + i.getListaIngredientes()[3] + " | "+ 
+					i.getListaIngredientes()[4];
+			num++;
+			
 		}
 		return msg;
 	}
