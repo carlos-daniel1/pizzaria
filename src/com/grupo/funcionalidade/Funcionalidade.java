@@ -16,7 +16,7 @@ import com.grupo.entidade.Pizza;
 import com.grupo.gerador.GeradorIngredientes;
 
 public class Funcionalidade {
-	
+
 	static GeradorIngredientes gerador = new GeradorIngredientes();
 	static ArrayList<String> baseIngredientes = new ArrayList<String>();
 	static ArrayList<Pizza> listaPizza = new ArrayList<>();
@@ -40,26 +40,104 @@ public class Funcionalidade {
 	public static void receberPedido() {
 		Pizza p = new Pizza();
 		p.setListaIngredientes(gerador.gerarIngredientesAleatorios());
-		String[] listaNomes = {"Raphael", "Leonardo", "Miquelangelo", "Donatelo"};
+		String[] listaNomes = { "Raphael", "Leonardo", "Miquelangelo", "Donatelo" };
 		String nome = gerador.gerarNomeCliente(listaNomes);
 		Pedido pedido = new Pedido(nome, 0, p);
 		pedidos.add(pedido);
-		
+
 	}
-	
+
 	public static Pedido pedidoAtual() {
 		if (pedidos.isEmpty()) {
 			Pizza p = new Pizza();
 			p.setListaIngredientes(gerador.gerarIngredientesAleatorios());
 			Pedido pedido = new Pedido("Márcio", 0, p);
 			pedidos.add(pedido);
-			
+
 		}
 		return pedidos.getFirst();
 	}
 
-	public static void prepararPizza(Pizza pizza) {
+
+	public static void addIngredientes() {
+		if (baseIngredientes.isEmpty()) {
+			baseIngredientes.add("Cebola");
+			baseIngredientes.add("Carne moida");
+			baseIngredientes.add("Queijo");
+			baseIngredientes.add("Catupiry");
+			baseIngredientes.add("Frango");
+			baseIngredientes.add("Calabresa");
+			baseIngredientes.add("Borda Chocolate");
+			baseIngredientes.add("Borda normal");
+			baseIngredientes.add("Chocolate");
+			baseIngredientes.add("Leite em pó");
+		}
 	}
+
+	public static Pizza criarPizza(int[] resposta) {
+		Pizza novaPizza = null;
+		String[] ingredientes = new String[5];
+
+		if (verificarIngredientes(resposta)) {
+			for (int i = 0; i < 5; i++) {
+				ingredientes[i] = baseIngredientes.get(resposta[i] - 1);
+			}
+			novaPizza = new Pizza();
+			novaPizza.setListaIngredientes(ingredientes);
+		}
+		return novaPizza;
+
+	}
+
+	public static boolean verificarIngredientes(int[] lista) {
+		boolean verificacao = true;
+
+		for (int i : lista) {
+			if (i < 0 && i > baseIngredientes.size()) {
+				verificacao = false;
+			}
+		}
+
+		return verificacao;
+	}
+
+	public static void addPizza(Pizza novaPizza) {
+		listaPizza.add(novaPizza);
+	}
+	
+	public static String pizzasCriadas() {
+		String msg = "Pizzas:";
+		
+		for(Pizza i : listaPizza) {
+			msg += "Pizza: " + i.getListaIngredientes();
+		}
+		return msg;
+	}
+	
+	
+	public static String mostrarIngredientes() {
+		String msg = "Ingredientes:";
+
+		int c = 1;
+		for (String item : baseIngredientes) {
+			msg += "\n " + c++ + "º) " + item;
+		}
+
+		return msg;
+	}
+	
+	
+	public static int[] converterInt(String input) {
+		String[] lista = input.split(" "); 
+		
+		int[] listaInt = new int[5];
+		
+		for(int i = 0; i < 5; i++) {
+			listaInt[i] = Integer.parseInt(lista[i]);
+		}
+		return listaInt;
+	}
+	
 
 	public static Pedido servirPedido() {
 		Pedido pedido = null;
@@ -72,7 +150,7 @@ public class Funcionalidade {
 					contadorPedidosServidos++;
 					break;
 				}
-				
+
 			}
 		}
 

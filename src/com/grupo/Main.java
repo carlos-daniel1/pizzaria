@@ -37,6 +37,22 @@ public class Main {
 				JOptionPane.showConfirmDialog(null,pedidoAtual.getId() + " : " + pedidoAtual.getCliente() +  " : " + pedidoAtual.getPizza().getListaIngredientes().toString());
 
 			} else if (opcao == 3) {
+				Funcionalidade.addIngredientes();
+				try {
+					String receberIngredientes = JOptionPane.showInputDialog(Funcionalidade.mostrarIngredientes() +
+							"\n\nEscolha o código de 5 ingredientes separados por espaço: ");
+					
+					int[] listaInt = Funcionalidade.converterInt(receberIngredientes);
+					Pizza novapizza = Funcionalidade.criarPizza(listaInt);
+					Funcionalidade.addPizza(novapizza);
+					
+					JOptionPane.showMessageDialog(null, Funcionalidade.pizzasCriadas());   
+					
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao criar pizza");
+					
+				}
+				
 
 			} else if (opcao == 4) {
 
