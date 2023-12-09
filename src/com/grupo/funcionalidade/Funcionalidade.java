@@ -1,0 +1,122 @@
+/*	1) Criar uma pizza
+	2) Criar um novo pedido
+	3) Servir um pedido
+	4) Adicionar ingredientes
+	5) Estatísticas dos pedidos
+	6) Sair do programa
+*/
+package com.grupo.funcionalidade;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.grupo.entidade.Pedido;
+import com.grupo.entidade.Pizza;
+import com.grupo.gerador.GeradorIngredientes;
+
+public class Funcionalidade {
+	
+	static GeradorIngredientes gerador = new GeradorIngredientes();
+	static ArrayList<String> baseIngredientes = new ArrayList<String>();
+	static ArrayList<Pizza> listaPizza = new ArrayList<>();
+	static ArrayDeque<Pedido> pedidos = new ArrayDeque<Pedido>();
+	public static int contadorPedidosServidos = 0;
+	public static ArrayList<Integer> contadorQuantidadeMediaIngredientes = new ArrayList<Integer>();
+	public static HashMap<String, Integer> controladorPedidosIngredientes = new HashMap<String, Integer>();
+
+	public static String mostrarMenu() {
+		return """
+				Menu:
+				1) Receber um pedido
+				2) Olhar pedido atual
+				3) Preparar uma pizza
+				4) Servir uma pizza
+				5) Estatísticas dos produtos
+				6) Sair do programa
+				""";
+	}
+
+	public static void receberPedido(int[] resposta) {
+	}
+	
+	public static Pedido pedidoAtual() {
+		if (pedidos.isEmpty()) {
+			Pizza p = new Pizza();
+			p.setListaIngredientes(gerador.gerarIngredientesAleatorios());
+			Pedido pedido = new Pedido("Márcio", 0, p);
+			pedidos.add(pedido);
+			
+		}
+		return pedidos.getFirst();
+	}
+
+	public static void prepararPizza(Pizza pizza) {
+	}
+
+	public static Pedido servirPedido() {
+		Pedido pedido = null;
+		if (!pedidos.isEmpty()) {
+
+			for (Pizza item : listaPizza) {
+				if (item.equals(pedidos.getFirst().getPizza())) {
+					pedido = pedidos.remove();
+					listaPizza.remove(item);
+					contadorPedidosServidos++;
+					break;
+				}
+				
+			}
+		}
+
+		return pedido;
+	}
+
+	public static void resetarValoresMap(String item) {
+		controladorPedidosIngredientes.put(item, 0);
+	}
+
+	public static String estatisticaPedido() {
+		String msg = "Estatísticas ⬇️ ";
+
+		msg += "\n Quantidade de pizzas servidas: " + contadorPedidosServidos;
+
+		int soma = 0;
+		for (int item : contadorQuantidadeMediaIngredientes)
+			soma += item;
+		if (contadorQuantidadeMediaIngredientes.size() > 0) {
+			msg += "\n Quantidade média de ingredientes por pizza: "
+					+ (soma / contadorQuantidadeMediaIngredientes.size());
+
+		} else {
+			msg += "\n Quantidade média de ingredientes por pizza: 0";
+		}
+
+		int maiorRepetido = 0;
+		int menorRepetido = 100;
+		String ingredienteMaisPedido = "";
+		String ingredienteMenosPedido = "";
+		for (String item : baseIngredientes) {
+			int valor = controladorPedidosIngredientes.get(item);
+			if (valor > maiorRepetido) {
+				maiorRepetido = valor;
+				ingredienteMaisPedido = item;
+			}
+		}
+		for (String item : baseIngredientes) {
+			int valor = controladorPedidosIngredientes.get(item);
+			if (valor < menorRepetido) {
+				menorRepetido = valor;
+				ingredienteMenosPedido = item;
+			}
+		}
+		msg += "\n O ingrediente mais pedido é " + ingredienteMaisPedido + "(" + maiorRepetido + " vezes)";
+
+		if (menorRepetido != 100) {
+			msg += "\n O ingrediente menos pedido é " + ingredienteMenosPedido + "(" + menorRepetido + " vezes)";
+		}
+
+		return msg;
+	}
+
+}
