@@ -37,7 +37,14 @@ public class Funcionalidade {
 				""";
 	}
 
-	public static void receberPedido(int[] resposta) {
+	public static void receberPedido() {
+		Pizza p = new Pizza();
+		p.setListaIngredientes(gerador.gerarIngredientesAleatorios());
+		String[] listaNomes = {"Raphael", "Leonardo", "Miquelangelo", "Donatelo"};
+		String nome = gerador.gerarNomeCliente(listaNomes);
+		Pedido pedido = new Pedido(nome, 0, p);
+		pedidos.add(pedido);
+		
 	}
 	
 	public static Pedido pedidoAtual() {

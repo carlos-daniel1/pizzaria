@@ -25,14 +25,24 @@ public class GeradorIngredientes {
 		Random rand = new Random();
 		int tamanho = ingredienteSet.size();
 		String[] listaIngrediente = new String[5];
-		
+
 		Object[] lista = ingredienteSet.toArray();
-		
+
 		for (int i = 0; i < 5; i++) {
 			listaIngrediente[i] = (String) lista[rand.nextInt(tamanho)];
 		}
-		
+
 		return listaIngrediente;
 	}
 
+	public String gerarNomeCliente(String[] nomesClientes) {
+		Random rand = new Random();
+		
+		int tamanho = nomesClientes.length;
+		String nome;
+
+		nome = (String) nomesClientes[rand.nextInt(tamanho)];
+
+		return nome;
+	}
 }
