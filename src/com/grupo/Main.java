@@ -17,200 +17,100 @@ import com.grupo.funcionalidade.Funcionalidade;
 
 public class Main {
 
-    public static void main(String[] args) {
-        JOptionPane.showMessageDialog(null, "Inicio da Pizzaria");
+	public static void main(String[] args) {
+		JOptionPane.showMessageDialog(null, "Inicio da Pizzaria");
 
-        int opcao = 0;
-        do {
-            try {
-                String opcaoStr = JOptionPane.showInputDialog(Funcionalidade.mostrarMenu());
-                opcao = Integer.parseInt(opcaoStr);
+		int opcao = 0;
+		do {
+			try {
+				String opcaoStr = JOptionPane.showInputDialog(Funcionalidade.mostrarMenu());
+				opcao = Integer.parseInt(opcaoStr);
 
-                if (opcao == 1) {
-                    criarPizza();
-                } else if (opcao == 2) {
-                    criarNovoPedido();
-                } else if (opcao == 3) {
-                    servirPedido();
-                } else if (opcao == 4) {
-                    adicionarIngredientes();
-                } else if (opcao == 5) {
-                    exibirEstatisticas();
-                } else if (opcao == 6) {
-                    agradecer();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Opção inválida. Insira um número entre 1 e 6.", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+				if (opcao == 1) {
+					criarPedido();
+				} else if (opcao == 2) {
+					pedidoAtual();
+				} else if (opcao == 3) {
+					prepararPizza();
+				} else if (opcao == 4) {
+					servirPizza();
+				} else if (opcao == 5) {
+					exibirEstatisticas();
+				} else if (opcao == 6) {
+					agradecer();
+				} else {
+					JOptionPane.showMessageDialog(null, "Opção inválida. Insira um número entre 1 e 6.", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				}
 
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Opção inválida. Insira um número.", "Erro",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Opção inválida. Insira um número.", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Erro no sistema 😠 \n" + e.getMessage());
+			}
 
-        } while (opcao != 6);
-    }
+		} while (opcao != 6);
+	}
 
-    private static void criarPizza() {
-        try {
-            String msg = "Digite o numero dos ingredientes, separados por espaço!\n";
-            String resposta = JOptionPane.showInputDialog(null, msg + Funcionalidade.mostrarIngredientes());
+	private static void criarPedido() {
+		Funcionalidade.receberPedido();
+	}
 
-            if (resposta == null || resposta.length() == 0) {
-                JOptionPane.showMessageDialog(null,
-                        "Você não colocou nenhum ingrediente na pizza, seu cozinheiro sem futuro!!");
-                return;
-            }
+	private static void pedidoAtual() {
+		Pedido pedidoAtual = Funcionalidade.pedidoAtual();
+		String msg = pedidoAtual.getId() + " : " + pedidoAtual.getCliente() + " : ";
 
-            Pizza pizzaCriada = criarPizzaVisual(resposta);
+		for (String item : pedidoAtual.getPizza().getListaIngredientes()) {
+			msg += item + " ";
+		}
 
-            if (pizzaCriada == null) {
-                JOptionPane.showMessageDialog(null, "Falha na criação da pizza, digite um ingrediente válido!");
-                return;
-            }
+		JOptionPane.showConfirmDialog(null, msg);
+	}
 
-            Funcionalidade.adicionarPizza(pizzaCriada);
+	private static void prepararPizza() {
+		try {
+			String receberIngredientes = JOptionPane.showInputDialog(Funcionalidade.mostrarIngredientes()
+					+ "\n\nEscolha o código de 5 ingredientes separados por espaço: ");
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Ingrediente inválido. Digite um número.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
+			int[] listaInt = Funcionalidade.converterInt(receberIngredientes);
+			Pizza novapizza = Funcionalidade.criarPizza(listaInt);
+			Funcionalidade.addPizza(novapizza);
 
-    private static void criarNovoPedido() {
-        try {
-            JOptionPane.showMessageDialog(null, "2) Criar um novo pedido", "Criação de pedido",
-                    JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, Funcionalidade.pizzasCriadas());
 
-            int mesa = Integer.parseInt(JOptionPane.showInputDialog("Informe sua mesa: "));
-            if (mesa <= 0) {
-                JOptionPane.showMessageDialog(null, "Digite um número de mesa válido.", "Erro",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao criar pizza");
 
-            String msg = "Digite o numero dos ingredientes, separados por espaço!\n";
-            String resposta = JOptionPane.showInputDialog(null, msg + Funcionalidade.mostrarIngredientes());
-            if (resposta == null || resposta.length() == 0) {
-                JOptionPane.showMessageDialog(null,
-                        "Você não colocou nenhum ingrediente na pizza, seu comedor de massa sem futuro!!");
-                return;
-            }
+		}
+	}
 
-            Pizza pizza = criarPizzaVisual(resposta);
+	private static void servirPizza() {
+		Pedido pedido = Funcionalidade.servirPedido();
+		if (pedido == null) {
+			JOptionPane.showMessageDialog(null, "Nenhuma pizza pode ser servida");
+		} else {
+			JOptionPane.showMessageDialog(null, pedido.getId() + " ⏩ mesa " + pedido.getMesa());
+		}
 
-            if (pizza == null) {
-                JOptionPane.showMessageDialog(null, "Falha na criação da pizza, digite um ingrediente válido!");
-                return;
-            }
+	}
 
-            String[] ingredientesPedidos = pizza.getListaIngredientes();
+	private static void exibirEstatisticas() {
+		try {
+			JOptionPane.showMessageDialog(null, "5) Estatísticas dos pedidos", "Pedidos",
+					JOptionPane.INFORMATION_MESSAGE);
 
-            int i = 0;
-            for (String item : ingredientesPedidos) {
-                if (item != null) {
-                    int quantidadeRepetida = Funcionalidade.controladorPedidosIngredientes.get(item);
-                    Funcionalidade.controladorPedidosIngredientes.put(item, quantidadeRepetida + 1);
-                    i++;
-                }
-            }
+			JOptionPane.showMessageDialog(null, Funcionalidade.estatisticaPedido());
 
-            Funcionalidade.contadorQuantidadeMediaIngredientes.add(i);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao exibir estatísticas. Número inválido.", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
-            Funcionalidade.novoPedido(mesa, pizza);
+	private static void agradecer() {
+		JOptionPane.showMessageDialog(null, "Agradecemos a preferência, volte sempre!", "Obrigado",
+				JOptionPane.INFORMATION_MESSAGE);
+	}
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Número inválido. Digite um número.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private static void servirPedido() {
-        try {
-            JOptionPane.showMessageDialog(null, "3) Servir um pedido", "Serviço", JOptionPane.INFORMATION_MESSAGE);
-
-            Pedido pedido = Funcionalidade.servirPedido();
-
-            String msg = "Nenhum pedido feito, ou a pizza não está pronta";
-
-            if (pedido != null) {
-                msg = "Servir pedido na mesa " + pedido.getMesa() + ". \nPizza: ";
-                for (String item : pedido.getPizza().getListaIngredientes()) {
-                    if (item != null)
-                        msg += "\n * " + item;
-                }
-            }
-
-            JOptionPane.showMessageDialog(null, msg);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao processar pedido. Número inválido.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private static void adicionarIngredientes() {
-        try {
-            String msg = "Quantos ingredientes deseja adicionar? \nDigite um número: ";
-            int quantidade = Integer.parseInt(JOptionPane.showInputDialog(msg));
-            if (quantidade <= 0) {
-                JOptionPane.showMessageDialog(null, "Digite um número maior que zero.", "Erro",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            for (int i = 1; i <= quantidade; i++) {
-                boolean cadastrou = Funcionalidade.adicionarIngredientes(JOptionPane.showInputDialog("Nome: "));
-                if (!cadastrou) {
-                    JOptionPane.showMessageDialog(null, "Já existe esse ingrediente!!", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                    i--;
-                }
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Número inválido. Digite um número.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private static void exibirEstatisticas() {
-        try {
-            JOptionPane.showMessageDialog(null, "5) Estatísticas dos pedidos", "Pedidos",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            JOptionPane.showMessageDialog(null, Funcionalidade.estatisticaPedido());
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao exibir estatísticas. Número inválido.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private static void agradecer() {
-        JOptionPane.showMessageDialog(null, "Agradecemos a preferência, volte sempre!", "Obrigado",
-                JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private static Pizza criarPizzaVisual(String resposta) {
-        try {
-            String[] respostaStr = resposta.split(" ");
-
-            int[] respostaInt = new int[5];
-
-            if (respostaStr.length > 1) {
-                for (int i = 0; i < respostaStr.length; i++) {
-                    respostaInt[i] = Integer.parseInt(respostaStr[i]);
-                }
-            } else {
-                respostaInt[0] = Integer.parseInt(respostaStr[0]);
-            }
-            return Funcionalidade.criarPizza(respostaInt);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Número inválido. Digite um número.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-    }
 }

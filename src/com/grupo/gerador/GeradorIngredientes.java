@@ -1,5 +1,6 @@
 package com.grupo.gerador;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -19,6 +20,18 @@ public class GeradorIngredientes {
 		ingredienteSet.add("Borda normal");
 		ingredienteSet.add("Chocolate");
 		ingredienteSet.add("Leite em pó");
+	}
+	
+	
+
+	public ArrayList<String> getIngredienteSet() {
+		ArrayList<String> lista = new ArrayList<>();
+		
+		for(Object item: ingredienteSet.toArray()) {
+			lista.add((String) item);
+		}
+		
+		return lista;
 	}
 
 	public String[] gerarIngredientesAleatorios() {

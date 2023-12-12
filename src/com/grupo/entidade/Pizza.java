@@ -18,7 +18,7 @@ public class Pizza {
 	public void setListaIngredientes(String[] listaIngredientes) {
 		this.listaIngredientes = listaIngredientes;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -39,7 +39,24 @@ public class Pizza {
 			return false;
 		}
 		Pizza other = (Pizza) obj;
-		return Arrays.equals(listaIngredientes, other.listaIngredientes);
+		return verificarIngrediente(listaIngredientes, other.listaIngredientes);
+	}
+
+	private boolean verificarIngrediente(String[] lista, String[] listaOther) {
+		int quantIguais = 0;
+
+		for (int i = 0; i < lista.length; i++) {
+			if (lista[i] == listaOther[i]) {
+				quantIguais++;
+			}
+		}
+		
+		if (quantIguais>=3) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 
 }
