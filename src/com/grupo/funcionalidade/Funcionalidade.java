@@ -39,8 +39,10 @@ public class Funcionalidade {
 	public static void receberPedido() {
 		Pizza p = new Pizza();
 		String[] listaIngredientesGerados = gerador.gerarIngredientesAleatorios();
+		
 		estatistica.estatisticaIngredientes(listaIngredientesGerados);
 		p.setListaIngredientes(listaIngredientesGerados);
+		
 		String[] listaNomes = { "Raphael", "Leonardo", "Miquelangelo", "Donatelo" };
 		String nome = gerador.gerarNomeCliente(listaNomes);
 		Pedido pedido = new Pedido(nome, 0, p);
@@ -147,10 +149,6 @@ public class Funcionalidade {
 		}
 
 		return pedido;
-	}
-
-	public static void resetarValoresMap() {
-		estatistica.resetarValores();
 	}
 
 	public static String estatisticaPedido() {
